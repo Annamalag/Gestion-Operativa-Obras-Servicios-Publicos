@@ -68,7 +68,11 @@ else:
 @st.cache_resource
 def conectar_google_sheets():
 
-    gc = gspread.service_account(
+    if "gcp_service_account" in st.secrets:
+       credentials = dict(st.secrets["gcp_service_account"])
+       gc = gspread.service_account_from_dict(credentials)
+    else:
+       gc = gspread.service_account(
         filename="chatbot-para-registro-de-datos-b292d3d251a3.json"
     )
 
